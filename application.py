@@ -60,7 +60,7 @@ def register():
 
         db.commit()
 
-        return redirect(url_for("index"))
+        return render_template("search.html")
     else:
         return render_template("register.html")
     
@@ -88,10 +88,14 @@ def login():
         session["user_id"] = user.id
         session["username"] = user.username
 
-    return render_template("login.html")
+    return render_template("search.html")
 
 @app.route("/logout")
 def logout():
     # remove session data
     session.clear()
     return render_template("logout.html")
+
+@app.route("/search")
+def search():
+    return render_template("search.html")
