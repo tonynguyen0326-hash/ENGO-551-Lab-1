@@ -35,7 +35,7 @@ def register():
 
         # check if passwords match
         if password != confirm:
-            return "Passwords do not match."
+            return render_template("register.html", error="Passwords do not match.")
         
         print(f"Username: {username}, Password: {password}")
 
