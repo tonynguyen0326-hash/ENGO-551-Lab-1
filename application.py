@@ -4,6 +4,7 @@ from flask import Flask, session, redirect, request, render_template, url_for
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -33,12 +34,10 @@ def register():
         password = request.form.get("password")
         confirm = request.form.get("confirm")
 
-        # check if passwords match
+        # check if passwords match, show error message if they don't
         if password != confirm:
             return render_template("register.html", error="Passwords do not match.")
         
-        print(f"Username: {username}, Password: {password}")
-
         return redirect(url_for("index"))
     else:
         return render_template("register.html")
