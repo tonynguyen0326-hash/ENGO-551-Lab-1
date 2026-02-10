@@ -103,11 +103,21 @@ def logout():
     session.clear()
     return render_template("logout.html")
 
-# once logged in
-@app.route("/search")
+# search page for books
+@app.route("/search", methods=["POST"])
 def search():
-    print("SESSION CONTENTS:", dict(session))
      # if user is not logged in, redirect to home page
     if "user_id" not in session:
         return redirect(url_for("index"))
-    return render_template("search.html")
+    # get info from book table
+    isbn = request.form.get("isbn")
+    title = request.form.get("title")
+    author = request.form.get("author")
+    year = request.form.get("year")
+
+    # query search results
+    query = text("SELECT * FROM books WHERE (:isbn IS NULL OR isbn ILIKE '%' || :isbn || '%') AND (:title IS NULL OR title ILIKE '%' || :title || '%') AND (:author IS NULL OR author ILIKE '%' || :author || '%') AND (:year IS NULL OR year ILIKE '%' || :year || '%')")
+
+    books = db.execute(query, {"isbn": isbn or None, "title": title or None, "author": author or None, "year": year or None}).fetchall()
+
+    return render_template("search.html", books=books)

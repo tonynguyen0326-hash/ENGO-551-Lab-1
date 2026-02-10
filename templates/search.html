@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Book Search</title>
-    </head>
-    <body>
-        <h1>Search for a book!</h1>
-        <a href="/logout">Log Out</a>
-    </body>
-</html>
+{% extends "layout.html" %}
+
+{% block title %}
+    Book Search
+{% endblock %}
+
+{% block heading %}
+    Search for a book!
+{% endblock %}
+    
+{% block body %}
+    <form action="/search" method="POST">
+        <!-- search bars -->
+        <input type="text" name="isbn" placeholder="Search by ISBN">
+        <input type="text" name="title" placeholder="Search by Title">
+        <input type="text" name="author" placeholder="Search by Author">
+        <input type="text" name="year" placeholder="Search by Year">
+        <button type="submit">Search!</button> 
+        <!-- if error occurs-->
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}                       
+    </form>
+{% endblock %}
