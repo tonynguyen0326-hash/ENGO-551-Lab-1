@@ -15,14 +15,16 @@
         <input type="text" name="title" placeholder="Search by Title">
         <input type="text" name="author" placeholder="Search by Author">
         <input type="text" name="year" placeholder="Search by Year">
-        <button type="submit">Search!</button> 
+        <button type="submit">Search!</button><br><br>
         <!-- if error occurs-->
         {% if error %}
             <p>{{ error }}</p>
         {% endif %}                       
     </form>
 
+    <!-- Check if search has happened-->
     {% if books is not none %}
+        <!-- Check if search returned results-->
         {% if books %}
             <ul>
                 {% for book in books %}
@@ -36,5 +38,6 @@
         {% else %}
             <p>No results found.</p>
         {% endif %}
-    {% endif %}    
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Log Out</a>    
 {% endblock %}
