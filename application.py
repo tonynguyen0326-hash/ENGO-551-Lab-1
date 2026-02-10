@@ -88,14 +88,26 @@ def login():
         session["user_id"] = user.id
         session["username"] = user.username
 
-    return render_template("search.html")
+        # redirect to search page
+        return redirect(url_for("search"))
 
+    return render_template("login.html")
+
+# logout page
 @app.route("/logout")
 def logout():
+    # if user is not logged in, redirect to home page
+    if "user_id" not in session:
+        return redirect(url_for("index"))
     # remove session data
     session.clear()
     return render_template("logout.html")
 
+# once logged in
 @app.route("/search")
 def search():
+    print("SESSION CONTENTS:", dict(session))
+     # if user is not logged in, redirect to home page
+    if "user_id" not in session:
+        return redirect(url_for("index"))
     return render_template("search.html")
